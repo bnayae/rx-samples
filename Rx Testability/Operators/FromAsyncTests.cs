@@ -15,7 +15,7 @@ using System.Runtime.Caching;
 
 #endregion // Using
 
-namespace Rx_Tests
+namespace Bnaya.Samples
 {
     [TestClass]
     public class FromAsyncTests

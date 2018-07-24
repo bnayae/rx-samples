@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
@@ -23,6 +24,50 @@ namespace Bnaya.Samples
 	{
 		private static int _morsePosition = 0;
 		private static int _textPosition = 0; // Write(translation, _textPosition, 4)
+
+        #region ConcurrentDictionary<string, char> _map = ...
+
+        private static ConcurrentDictionary<string, char> _map = new ConcurrentDictionary<string, char>
+        {
+            [".-"] =	'A',
+            ["-..."] =	'B',
+            ["-.-."] =	'C',
+            ["-.."] =	'D',
+            ["."] =		'E',
+            ["..-."] =	'F',
+            ["__."] =	'G',
+            ["...."] =	'H',
+            [".."] =	'I',
+            [".___"] =	'J',
+            ["-.-"] =	'K',
+            [".-.."] =	'L',
+            ["__"] =    'M',
+            ["-."] =    'N',
+            ["___"] =   'O',
+            [".__."] =  'P',
+            ["__.-"] =  'Q',
+            [".-."] =   'R',
+            ["..."] =   'S',
+            ["-"] =     'T',
+            ["..-"] =   'U',
+            ["...-"] =  'V',
+            [".__"] =   'W',
+            ["-..-"] =  'X',
+            ["-.__"] =  'Y',
+            ["__.."] =  'Z',
+            [".____"] = '1',
+            ["..___"] = '2',
+            ["...__"] = '3',
+            ["....-"] = '4',
+            ["....."] = '5',
+            ["-...."] = '6',
+            ["__..."] = '7',
+            ["___.."] = '8',
+            ["____."] = '9',
+            ["_____"] = '0'
+        };
+
+        #endregion // ConcurrentDictionary<string, char> _map = ...
 
 		private static readonly object _gate = new object();
 
@@ -49,7 +94,8 @@ namespace Bnaya.Samples
 		{
 			Write(code.ToString(), left, top);
 		}
-		private static void Write(string code, int left, int top)
+
+        private static void Write(string code, int left, int top)
 		{
 			lock (_gate)
 			{
@@ -109,10 +155,4 @@ Numbers
 	4	. . . . _	 	9	_ _ _ _ .	 
 	5	. . . . .	 	0	_ _ _ _ _	 
 						 
-Abbreviated Numbers
-	1	. _	 	    6	_ . . . .	 
-	2	. . _	 	7	_ . . .	 
-	3	. . . _	 	8	_ . .	 
-	4	. . . . _   9	_ .	 
-	5   .
  */
