@@ -25,6 +25,7 @@ namespace Bnaya.Samples
 		private static int _morsePosition = 0;
 		private static int _textPosition = 0; // Write(translation, _textPosition, 4)
 
+        private const string HELLO_REACTIVE_EXTENSION = ".... . .-.. .-.. ---  .-. . .- -.-. - .. ...- .  . -..- - . -. ... .. --- -. ... ...";
         #region ConcurrentDictionary<string, char> _map = ...
 
         private static ConcurrentDictionary<string, char> _map = new ConcurrentDictionary<string, char>
@@ -35,36 +36,36 @@ namespace Bnaya.Samples
             ["-.."] =	'D',
             ["."] =		'E',
             ["..-."] =	'F',
-            ["__."] =	'G',
+            ["--."] =	'G',
             ["...."] =	'H',
             [".."] =	'I',
-            [".___"] =	'J',
+            [".---"] =	'J',
             ["-.-"] =	'K',
             [".-.."] =	'L',
-            ["__"] =    'M',
+            ["--"] =    'M',
             ["-."] =    'N',
-            ["___"] =   'O',
-            [".__."] =  'P',
-            ["__.-"] =  'Q',
+            ["---"] =   'O',
+            [".--."] =  'P',
+            ["--.-"] =  'Q',
             [".-."] =   'R',
             ["..."] =   'S',
             ["-"] =     'T',
             ["..-"] =   'U',
             ["...-"] =  'V',
-            [".__"] =   'W',
+            [".--"] =   'W',
             ["-..-"] =  'X',
-            ["-.__"] =  'Y',
-            ["__.."] =  'Z',
-            [".____"] = '1',
-            ["..___"] = '2',
-            ["...__"] = '3',
+            ["-.--"] =  'Y',
+            ["--.."] =  'Z',
+            [".----"] = '1',
+            ["..---"] = '2',
+            ["...--"] = '3',
             ["....-"] = '4',
             ["....."] = '5',
             ["-...."] = '6',
-            ["__..."] = '7',
-            ["___.."] = '8',
-            ["____."] = '9',
-            ["_____"] = '0'
+            ["--..."] = '7',
+            ["---.."] = '8',
+            ["----."] = '9',
+            ["-----"] = '0'
         };
 
         #endregion // ConcurrentDictionary<string, char> _map = ...
@@ -108,18 +109,38 @@ namespace Bnaya.Samples
 
 		#region GetProducer
 
+		//private static IObservable<char> GetProducer()
+		//{
+		//	var subject = new Subject<char>();
+		//	Task _ = Task.Run(() =>
+		//	{
+		//		while (true)
+		//		{
+		//			char c = Console.ReadKey(true).KeyChar;
+		//			subject.OnNext(c);
+		//		}
+		//	});
+		//	return subject.Where(c => c == '-' || c == '.' || c == ' ')
+		//				  .Do(c => Write(c, _morsePosition, 2))
+		//				  .Do(c =>
+		//				  {
+		//					  _morsePosition++;
+		//					  if (c == ' ')
+		//						  _textPosition++;
+		//				  });
+		//}
+
 		private static IObservable<char> GetProducer()
 		{
-			var subject = new Subject<char>();
-			Task _ = Task.Run(() =>
-			{
-				while (true)
-				{
-					char c = Console.ReadKey(true).KeyChar;
-					subject.OnNext(c);
-				}
-			});
-			return subject.Where(c => c == '-' || c == '.' || c == ' ')
+            var result = Observable.Create<char>(async (consumer, cancellation) =>
+            {
+                foreach (var c in HELLO_REACTIVE_EXTENSION)
+                {
+                    await Task.Delay(500).ConfigureAwait(false);
+                    consumer.OnNext(c);
+                }
+            })
+			.Where(c => c == '-' || c == '.' || c == ' ')
 						  .Do(c => Write(c, _morsePosition, 2))
 						  .Do(c =>
 						  {
@@ -127,6 +148,7 @@ namespace Bnaya.Samples
 							  if (c == ' ')
 								  _textPosition++;
 						  });
+            return result;
 		}
 
 		#endregion // GetProducer
