@@ -1,0 +1,21 @@
+use Yahoo stock NuGet: YahooStockQuotes
+Create producer (IObservable) which expose stock information from Yahoo Stock
+
+private readonly QuoteService _service = new QuoteService();
+
+IFindQuotes proxy = _service.Quote("YHOO", "AAPL", "GOOG", "MSFT");
+
+while (true)
+{
+    dynamic quotes = proxy.Return(
+        QuoteReturnParameter.Name,
+        QuoteReturnParameter.Symbol,
+        QuoteReturnParameter.LatestTradePrice);
+    foreach (var quote in quotes)
+    {
+        // quote.Symbol
+		// quote.Name
+		// quote.LatestTradePrice
+    }
+    await Task.Delay(500);
+}
