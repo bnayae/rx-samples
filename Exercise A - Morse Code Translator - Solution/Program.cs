@@ -75,17 +75,24 @@ namespace Bnaya.Samples
 		static void Main(string[] args)
 		{
 			Console.CursorVisible = false;
-			IObservable<char> morse = GetProducer();
-			// TODO: Translation stream goes here
+            IObservable<char> morse = GetProducer()
+                                            .Publish()
+                                            .RefCount();
 
-
+            // TODO: Translation stream goes here
+            var morseWords = morse.Where(c => c != ' ')
+								  .Window(() => morse.Where(c => c == ' '));
+            var transtaletd = from mw in morseWords
+                              from code in mw.Scan(string.Empty, (acc, val) => acc + val)
+                              select _map[code];
+            transtaletd.Subscribe(m => Write(m, _textPosition, 4));
 			morse.Wait();
             Console.ReadLine();
-		}
+        }
 
-		#region Write
+        #region Write
 
-		private static void Write(char code, int left, int top)
+        private static void Write(char code, int left, int top)
 		{
 			Write(code.ToString(), left, top);
 		}
