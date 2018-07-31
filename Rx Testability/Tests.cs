@@ -178,6 +178,39 @@ namespace Bnaya.Samples
 
 		#endregion // TenStars_ShouldProduce10StarsAndComplete_BySteps_Test
 
+		#region TenStars_ShouldProduce10StarsAndCompleteX_Test
+
+		[TestMethod]
+		public void TenStars_ShouldProduce10StarsAndCompleteX_Test()
+		{
+			// arrange
+			var observer = _scheduler.CreateObserver<string>();
+
+			// act
+			var stars = _instance.TenStars();
+			stars.Subscribe(observer);
+
+			// verify
+			_scheduler.AdvanceBy(ONE_MINUTE_TICKS * RxOperation.LIMIT);
+
+			// verify
+			observer.Messages.AssertEqual(
+				OnNext(ONE_MINUTE_TICKS * 1 , "*"),
+				OnNext(ONE_MINUTE_TICKS * 2 , "**"),
+				OnNext(ONE_MINUTE_TICKS * 3 , "***"),
+				OnNext(ONE_MINUTE_TICKS * 4 , "****"),
+				OnNext(ONE_MINUTE_TICKS * 5 , "*****"),
+				OnNext(ONE_MINUTE_TICKS * 6 , "******"),
+				OnNext(ONE_MINUTE_TICKS * 7 , "*******"),
+				OnNext(ONE_MINUTE_TICKS * 8 , "********"),
+				OnNext(ONE_MINUTE_TICKS * 9 , "*********"),
+				OnNext(ONE_MINUTE_TICKS * 10, "**********"),
+				OnCompleted<string>(ONE_MINUTE_TICKS * 10)
+			);
+		}
+
+		#endregion // TenStars_ShouldProduce10StarsAndCompleteX_Test
+
 		#region TenStars_ShouldProduce10StarsAndComplete_BySteps_CompareWithPreset_Test
 
 		[TestMethod]
