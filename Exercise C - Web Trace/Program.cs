@@ -24,27 +24,38 @@ namespace Bnaya.Samples
             //          view count
         }
 
-        private static IObservable<(string User, UserAction Action)> CreateUsersStream()
+        #region CreateUsersStream
+
+        private static IObservable<(int Id, string User, UserAction Action)> CreateUsersStream()
         {
             return Observable.Merge(
-                        CreateUsrStream("Yossi"),
-                        CreateUsrStream("Dina"),
-                        CreateUsrStream("Lorri"),
-                        CreateUsrStream("Alex"),
-                        CreateUsrStream("Shai")
+                        CreateUsrStream(0, "Yossi"),
+                        CreateUsrStream(1, "Dina"),
+                        CreateUsrStream(2, "Lorri"),
+                        CreateUsrStream(3, "Alex"),
+                        CreateUsrStream(4, "Shai")
                     );
         }
 
-        private static IObservable<(string User, UserAction Action)> CreateUsrStream(
-                                            string user)
+        #endregion // CreateUsersStream
+
+        #region CreateUsrStream
+
+        private static IObservable<(int Id, string User, UserAction Action)> CreateUsrStream(
+                                            int id, string user)
         {
-            return Observable.Create<(string User, UserAction Action)>(
+            return Observable.Create<(int Id, string User, UserAction Action)>(
                         async (consumer, ct) =>
                         {
-                            await Task.Delay(rnd.Next(50, 3000)).ConfigureAwait(false);
-                            UserAction action = (UserAction)(Environment.TickCount % COUNT);
-                            consumer.OnNext((user, action));
+                            while (true)
+                            {
+                                await Task.Delay(rnd.Next(50, 3000)).ConfigureAwait(false);
+                                UserAction action = (UserAction)(Environment.TickCount % COUNT);
+                                consumer.OnNext((id, user, action));
+                            }
                         });
         }
+
+        #endregion // CreateUsrStream
     }
 }
