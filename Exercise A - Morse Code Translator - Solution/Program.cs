@@ -25,7 +25,7 @@ namespace Bnaya.Samples
 		private static int _morsePosition = 0;
 		private static int _textPosition = 0; // Write(translation, _textPosition, 4)
 
-		private const string HELLO_REACTIVE_EXTENSION = ".... . .-.. .-.. ---  .-. . .- -.-. - .. ...- .  . -..- - . -. ... .. --- -. ... ...";
+		private const string HELLO_REACTIVE_EXTENSION = ".... . .-.. .-.. ---  .-. . .- -.-. - .. ...- .  . -..- - . -. ... .. --- -. ...";
 		#region ConcurrentDictionary<string, char> _map = ...
 
 		private static ConcurrentDictionary<string, char> _map = new ConcurrentDictionary<string, char>
@@ -79,9 +79,10 @@ namespace Bnaya.Samples
                                             .Publish()
                                             .RefCount();
 
+            var morseOnly = morse.Where(c => c != ' ');
+            var trigger = morse.Where(c => c == ' ');
             // TODO: Translation stream goes here
-            var morseWords = morse.Where(c => c != ' ')
-								  .Window(() => morse.Where(c => c == ' '));
+            var morseWords = morseOnly.Window(() => trigger);
             var transtaletd = from mw in morseWords
                               from code in mw.Scan(string.Empty, (acc, val) => acc + val)
                               select _map[code];
@@ -140,6 +141,7 @@ namespace Bnaya.Samples
 					await Task.Delay(100).ConfigureAwait(false);
 					consumer.OnNext(c);
 				}
+                consumer.OnCompleted();
 			})
 			.Where(c => c == '-' || c == '.' || c == ' ')
 						  .Do(c => Write(c, _morsePosition, 2))
