@@ -1,21 +1,28 @@
 use Yahoo stock NuGet: YahooStockQuotes
-Create producer (IObservable) which expose stock information from Yahoo Stock
+Assignment A: Create producer (IObservable) which expose stock information from Yahoo Stock
 
+Yahoo Example:
 private readonly QuoteService _service = new QuoteService();
 
 IFindQuotes proxy = _service.Quote("YHOO", "AAPL", "GOOG", "MSFT");
 
 while (true)
 {
-    dynamic quotes = proxy.Return(
-        QuoteReturnParameter.Name,
-        QuoteReturnParameter.Symbol,
-        QuoteReturnParameter.LatestTradePrice);
-    foreach (var quote in quotes)
-    {
-        // quote.Symbol
+	dynamic quotes = proxy.Return(
+		QuoteReturnParameter.Name,
+		QuoteReturnParameter.Symbol,
+		QuoteReturnParameter.LatestTradePrice);
+	foreach (var quote in quotes)
+	{
+		// quote.Symbol
 		// quote.Name
 		// quote.LatestTradePrice
-    }
-    await Task.Delay(500);
+	}
+	await Task.Delay(500);
 }
+
+Assignment B: Trace stocks which increase or decrease 4 times in a row
+Assignment C: Trace stocks which was increase 4 times in a row and the total rage > 3$
+Assignment D: Trace when more than single stock symbol of Assignment 
+			   occurs within a range of 10 seconds
+Assignment E: Set test to check the logic of Assignment D

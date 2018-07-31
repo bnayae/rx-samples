@@ -48,9 +48,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler Rx Testing", "Rx 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04 Scheduler and UI", "Scheduler and UI\04 Scheduler and UI.csproj", "{CC64232F-A96F-4F04-ABE1-909FE2961034}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisposableTests", "DisposableTests\DisposableTests.csproj", "{D9D46E0C-CF4F-490A-88A3-C83434C41CDB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "025 DisposableTests", "DisposableTests\025 DisposableTests.csproj", "{D9D46E0C-CF4F-490A-88A3-C83434C41CDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rx Testability", "Rx Testability\Rx Testability.csproj", "{147ECB4E-41F0-4BFD-92D3-63E42A0FBE2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "030 Rx Testability", "Rx Testability\030 Rx Testability.csproj", "{147ECB4E-41F0-4BFD-92D3-63E42A0FBE2B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "More", "More", "{F199499D-120C-4860-BE23-8ADE09B46918}"
 EndProject
@@ -76,7 +76,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercise C - Web Trace", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercise C - Web Trace Solution", "Exercise C - Web Trace Solution\Exercise C - Web Trace Solution.csproj", "{A28FD81E-F608-494D-96E9-7AAB921EC2FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Join Sample", "Join Sample\Join Sample.csproj", "{8063959B-64E4-4D81-ACCD-7774FE9301C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "020 Join Sample", "Join Sample\020 Join Sample.csproj", "{8063959B-64E4-4D81-ACCD-7774FE9301C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

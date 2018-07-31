@@ -70,7 +70,7 @@ namespace Bnaya.Samples
             var xs = Observable.Interval(TimeSpan.FromSeconds(1), scd)
                 .Take(10);
             var ys = from item in xs
-                     from data in Observable.FromAsync(() => cache.CacheableoRemoteCall(item % 3))
+                     from data in Observable.FromAsync(() => cache.CacheableRemoteCall(item % 3))
                      select data;
 
             var observer = scd.CreateObserver<Data>();
@@ -100,7 +100,7 @@ namespace Bnaya.Samples
                 _scd = scd;
             }
 
-            public Task<Data> CacheableoRemoteCall(long val)
+            public Task<Data> CacheableRemoteCall(long val)
             {
 
                 string key = val.ToString();
